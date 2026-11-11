@@ -1,0 +1,18 @@
+{
+	"info": {
+		"_postman_id": "f4eef4dc-4635-442c-86d3-9682b9f650dd",
+		"name": "RestDemo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "58943668"
+	},
+	"item": [
+		{
+			"name": "sample_request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
