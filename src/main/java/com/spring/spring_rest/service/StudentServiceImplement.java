@@ -7,6 +7,7 @@ import com.spring.spring_rest.dto.StudentDto;
 import com.spring.spring_rest.mapper.StudentMapper;
 import com.spring.spring_rest.repository.StudentRepository;
 import com.spring.spring_rest.entity.Student;
+import com.spring.spring_rest.exception.AlreadyExistingEmailException;
 import com.spring.spring_rest.exception.StudentNotFoundException;
 
 /**
@@ -31,6 +32,10 @@ public class StudentServiceImplement implements StudentService {
      */
     @Override 
     public StudentDto createStudent(StudentDto thStudentDto) {
+        if (studentRepo.existsByEmail(thStudentDto.getEmail())) {
+            throw new AlreadyExistingEmailException("Email already exists.");
+        }
+
         Student theStudent = StudentMapper.mapToStudent(thStudentDto);
         Student savedStudent = studentRepo.save(theStudent);
         return StudentMapper.mapToStudentDto(savedStudent);
@@ -62,13 +67,17 @@ public class StudentServiceImplement implements StudentService {
      * {@inheritDoc}
      */
     @Override 
-    public StudentDto updateStudent(Long theId, StudentDto thStudentDto) {
+    public StudentDto updateStudent(Long theId, StudentDto theStudentDto) {
         Student student = studentRepo.findById(theId).orElseThrow(() -> 
         new StudentNotFoundException("Student id " + theId + " not found!"));
 
-        student.setFirstName(thStudentDto.getFirstName());
-        student.setLastName(thStudentDto.getLastName());
-        student.setEmail(thStudentDto.getEmail());
+        if (studentRepo.existsByEmailAndIdNot(theStudentDto.getEmail(), theId)) {
+            throw new AlreadyExistingEmailException("Email already exists.");
+        }
+
+        student.setFirstName(theStudentDto.getFirstName());
+        student.setLastName(theStudentDto.getLastName());
+        student.setEmail(theStudentDto.getEmail());
 
         Student savedStudent = studentRepo.save(student);
         return StudentMapper.mapToStudentDto(savedStudent);
@@ -89,6 +98,11 @@ public class StudentServiceImplement implements StudentService {
             student.setLastName(theStudentDto.getLastName());
         }
         if (theStudentDto.getEmail() != null) {
+            if (studentRepo.existsByEmailAndIdNot(theStudentDto.getEmail(), 
+                                                    theId)) {
+                throw new 
+                    AlreadyExistingEmailException("Email already exists.");
+            }
             student.setEmail(theStudentDto.getEmail());
         }
 

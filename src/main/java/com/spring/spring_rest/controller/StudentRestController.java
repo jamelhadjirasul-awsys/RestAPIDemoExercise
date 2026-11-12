@@ -42,7 +42,7 @@ public class StudentRestController {
      */
     @PostMapping
     public ResponseEntity<StudentDto> createStudent(@Valid 
-                        @RequestBody StudentDto theStudentDto) {
+                @RequestBody StudentDto theStudentDto) {
 
         StudentDto savedStudent = studentService.createStudent(theStudentDto);
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
@@ -56,7 +56,8 @@ public class StudentRestController {
      */
     @GetMapping("{id}")
     public ResponseEntity<StudentDto> getStudentById(@PathVariable Long id) {
-        StudentDto studentDto = studentService.getStudentById(id);
+                StudentDto studentDto = studentService.getStudentById(id);
+
         return ResponseEntity.ok(studentDto);
     }
 
@@ -67,7 +68,8 @@ public class StudentRestController {
      */
     @GetMapping 
     public ResponseEntity<List<StudentDto>> getAllStudents() {
-        List<StudentDto> students = studentService.getAllStudents();
+                List<StudentDto> students = studentService.getAllStudents();
+
         return ResponseEntity.ok(students);
     }
 
@@ -80,7 +82,7 @@ public class StudentRestController {
      */
     @PutMapping("{id}")
     public ResponseEntity<StudentDto> updateStudent(@PathVariable Long id, 
-                        @Valid @RequestBody StudentDto theStudentDto) {
+                @Valid @RequestBody StudentDto theStudentDto) {
 
         StudentDto studentDto 
                         = studentService.updateStudent(id, theStudentDto);
@@ -97,7 +99,7 @@ public class StudentRestController {
      */
     @PatchMapping("{id}")
     public ResponseEntity<StudentDto> patchStudent(@PathVariable Long id, 
-                        @Valid @RequestBody StudentDto theStudentDto) {
+                @Valid @RequestBody StudentDto theStudentDto) {
 
         StudentDto studentDto = studentService.patchStudent(id, theStudentDto);
         return ResponseEntity.ok(studentDto);

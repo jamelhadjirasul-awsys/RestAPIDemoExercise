@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.spring.spring_rest.entity.StudentErrorResponse;
+import com.spring.spring_rest.exception.AlreadyExistingEmailException;
 import com.spring.spring_rest.exception.StudentNotFoundException;
 
 /**
@@ -42,9 +43,8 @@ public class StudentExceptionHandler {
      * @return a bad-request response
      */
     @ExceptionHandler 
-    public ResponseEntity<StudentErrorResponse> handleException (Exception ex) 
-    {
-        StudentErrorResponse err = new StudentErrorResponse();
+    public ResponseEntity<StudentErrorResponse> handleException (Exception ex){
+            StudentErrorResponse err = new StudentErrorResponse();
 
         err.setStatus(HttpStatus.BAD_REQUEST.value());
         err.setMessage("Invalid data. Only integers are accepted");
@@ -60,8 +60,9 @@ public class StudentExceptionHandler {
      * @return a map of field names to validation messages
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationException (
+    public ResponseEntity<Map<String, String>> handleValidationException(
             MethodArgumentNotValidException ex) {
+
         Map<String, String> err = new HashMap<>();
     
         ex.getBindingResult().getFieldErrors().forEach(error -> {
@@ -69,4 +70,22 @@ public class StudentExceptionHandler {
         });
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }    
+
+    /**
+     * Returns a conflict response when an email is already in use.
+     *
+     * @param ex exception describing the duplicate email
+     * @return a conflict response with the error details
+     */
+    @ExceptionHandler(AlreadyExistingEmailException.class)
+    public ResponseEntity<StudentErrorResponse> handleExistingEmail(
+            AlreadyExistingEmailException ex) {
+        
+        StudentErrorResponse err = new StudentErrorResponse();
+        err.setStatus(HttpStatus.CONFLICT.value());
+        err.setMessage(ex.getMessage());
+        err.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(err, HttpStatus.CONFLICT);
+    }
 }
