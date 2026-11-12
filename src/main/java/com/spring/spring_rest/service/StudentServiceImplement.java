@@ -31,12 +31,12 @@ public class StudentServiceImplement implements StudentService {
      * {@inheritDoc}
      */
     @Override 
-    public StudentDto createStudent(StudentDto thStudentDto) {
-        if (studentRepo.existsByEmail(thStudentDto.getEmail())) {
+    public StudentDto createStudent(StudentDto theStudentDto) {
+        if (studentRepo.existsByEmail(theStudentDto.getEmail())) {
             throw new AlreadyExistingEmailException("Email already exists.");
         }
 
-        Student theStudent = StudentMapper.mapToStudent(thStudentDto);
+        Student theStudent = StudentMapper.mapToStudent(theStudentDto);
         Student savedStudent = studentRepo.save(theStudent);
         return StudentMapper.mapToStudentDto(savedStudent);
     }
