@@ -1,18 +1,11 @@
 package com.spring.spring_rest.controller;
 
 import com.spring.spring_rest.dto.StudentDto;
-import com.spring.spring_rest.entity.Student;
-import com.spring.spring_rest.exception.StudentNotFoundException;
 import com.spring.spring_rest.service.StudentService;
-
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 /**
  * Exposes REST endpoints for retrieving and managing students.
@@ -107,7 +98,7 @@ public class StudentRestController {
     @PatchMapping("{id}")
     public ResponseEntity<StudentDto> patchStudent(@PathVariable Long id, 
                         @Valid @RequestBody StudentDto theStudentDto) {
-                            
+
         StudentDto studentDto = studentService.patchStudent(id, theStudentDto);
         return ResponseEntity.ok(studentDto);
     }
