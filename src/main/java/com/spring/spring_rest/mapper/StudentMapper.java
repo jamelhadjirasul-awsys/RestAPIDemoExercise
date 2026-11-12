@@ -3,10 +3,17 @@ package com.spring.spring_rest.mapper;
 import com.spring.spring_rest.entity.Student;
 import com.spring.spring_rest.dto.StudentDto;
 
-
+/**
+ * Converts between student entities and data transfer objects.
+ */
 public class StudentMapper {
 
-    // method will map Student to StudentDto
+    /**
+     * Converts a student entity to a DTO.
+     *
+     * @param theStudent entity to convert
+     * @return the corresponding student DTO
+     */
     public static StudentDto mapToStudentDto(Student theStudent) {
         return new StudentDto(theStudent.getId(), 
                     theStudent.getFirstName(), 
@@ -14,7 +21,12 @@ public class StudentMapper {
                     theStudent.getEmail());
     }
 
-    // method will map StudentDto to Student
+    /**
+     * Converts a student DTO to an entity.
+     *
+     * @param thStudentDto DTO to convert
+     * @return the corresponding student entity
+     */
     public static Student mapToStudent(StudentDto thStudentDto) {
         return new Student (thStudentDto.getId(),
                             thStudentDto.getFirstName(),
