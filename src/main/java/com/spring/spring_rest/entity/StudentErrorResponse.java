@@ -51,6 +51,4 @@ public class StudentErrorResponse {
     public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
     }
-
-    
 }

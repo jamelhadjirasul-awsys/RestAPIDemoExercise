@@ -17,7 +17,8 @@ public interface StudentRepository extends JpaRepository<Student, Long>{
     boolean existsByEmail(String email);
 
     /**
-     * Checks whether an email belongs to a student other than the specified one.
+     * Checks whether an email belongs to a student other 
+     * than the specified one.
      *
      * @param email email address to check
      * @param id ID of the student to exclude
